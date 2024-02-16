@@ -1,5 +1,9 @@
 ## Download trained model (- LPIPS)
 https://drive.google.com/file/d/1qwyK1lWJYF7DEqa2Ey-93Rtk3Z5fTNgs/view?usp=sharing
+```bash
+├── models
+│   └── LPIPS_loss.h5
+```
 
 ## Run in terminal
 ```c
