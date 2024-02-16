@@ -1,11 +1,12 @@
-# Download trained model (- LPIPS)
+## Download trained model (- LPIPS)
 https://drive.google.com/file/d/1qwyK1lWJYF7DEqa2Ey-93Rtk3Z5fTNgs/view?usp=sharing
 
+## Run in terminal
 ```c
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
-# Directory Structure
+## Directory Structure
 ```bash
 (Project Root)face_prediction_fastapi
 │
