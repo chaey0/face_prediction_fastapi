@@ -1,3 +1,6 @@
+# Download trained model (- LPIPS)
+https://drive.google.com/file/d/1qwyK1lWJYF7DEqa2Ey-93Rtk3Z5fTNgs/view?usp=sharing
+
 ```c
 pip install -r requirements.txt
 uvicorn main:app --reload
