@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict_Face Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        label:hover {
+            background-color: #0056b3;
+        }
+        .thumbnail {
+            max-width: 200px;
+            max-height: 200px;
+            margin-right: 20px;
+        }
+        .imageContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-bottom: 60px; /* Adjust padding as needed */
+        }
+        .imageContainer > div {
+            margin-right: 20px;
+        }
+        .placeholderBox {
+            width: 200px;
+            height: 200px;
+            background-color: #ddd;
+            background-size: contain; /* Adjusted property */
+            background-repeat: no-repeat; /* Ensures the image is not repeated */
+            background-position: center; /* Centers the image */
+        }
+        .downloadButton {
+            position: absolute;
+            bottom: 20px; /* Adjust position as needed */
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .downloadButton:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional styles for mobile responsiveness */
+        @media (max-width: 600px) {
+            .downloadButton {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 20px;
+            }
+            .imageContainer {
+                padding-bottom: 90px; /* Adjust padding as needed */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mask2Face Prediction</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="fileInput">Upload Image</label>
+            <input type="file" id="fileInput" name="file" onchange="uploadImage(this)">
+            <button type="submit" style="display: none;">Submit</button>
+        </form>
+        <div class="imageContainer">
+            <div>
+                <h2>Original Image</h2>
+                <div id="originalImage" class="placeholderBox"></div>
+            </div>
+            <div>
+                <h2>Generated Image</h2>
+                <div id="generatedImage" class="placeholderBox"></div>
+            </div>
+        </div>
+        <button class="downloadButton" id="downloadButton" onclick="downloadImage()">Download Generated Image</button>
+    </div>
+
+    <script>
+        function uploadImage(input) {
+            const formData = new FormData();
+            formData.append('file', input.files[0]);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to upload image');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const imageUrl = URL.createObjectURL(blob);
+                document.getElementById('originalImage').style.backgroundImage = `url(${URL.createObjectURL(input.files[0])})`;
+                document.getElementById('generatedImage').style.backgroundImage = `url(${imageUrl})`;
+                document.getElementById('downloadButton').setAttribute('download', 'generated_image.png');
+                document.getElementById('downloadButton').setAttribute('href', imageUrl);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function downloadImage() {
+            const generatedImageUrl = document.getElementById('generatedImage').style.backgroundImage.slice(5, -2);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = generatedImageUrl;
+            downloadLink.download = 'generated_image.png';
+            downloadLink.click();
+        }
+    </script>
+</body>
+</html>
