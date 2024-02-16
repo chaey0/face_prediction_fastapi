@@ -1,3 +1,8 @@
+```c
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+# Directory Structure
 ```bash
 (Project Root)face_prediction_fastapi
 │
