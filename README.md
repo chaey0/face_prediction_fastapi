@@ -10,6 +10,7 @@ https://drive.google.com/file/d/1qwyK1lWJYF7DEqa2Ey-93Rtk3Z5fTNgs/view?usp=shari
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
+
 ## Directory Structure
 ```bash
 (Project Root)face_prediction_fastapi
@@ -39,3 +40,4 @@ uvicorn main:app --reload
 │
 └── requirements.txt
 ```
+![image](https://github.com/chaey0/face_prediction_fastapi/assets/76030925/712f4161-8323-4507-9523-c55cceb9833d)
